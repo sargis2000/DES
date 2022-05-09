@@ -106,6 +106,9 @@ class GUIDes:
         except AssertionError as e:
             self.__error_window(e)
 
+        except UnicodeEncodeError as e:
+            self.__error_window(e)
+
     def __decrypt(self) -> None:
         self.widgets = self.__get_widgets()
         try:
@@ -113,8 +116,11 @@ class GUIDes:
             self.decrypted_text = self.key.decrypt(self.widgets['text'].encode('latin-1'),
                                                    padding=self.widgets['padding'])
             self.__result_window(self.decrypted_text)
+
         except AssertionError as e:
-            e = Exception('The length of the message should be divisible by 8')
+            self.__error_window(e)
+
+        except UnicodeEncodeError as e:
             self.__error_window(e)
 
 
